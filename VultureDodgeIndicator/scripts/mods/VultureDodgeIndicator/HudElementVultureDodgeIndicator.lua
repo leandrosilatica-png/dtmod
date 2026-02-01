@@ -7,6 +7,7 @@ local UIWidget = require("scripts/managers/ui/ui_widget")
 local BUFF_TEMPLATE_NAME = "broker_vultures_mark_dodge_on_ranged_crit_dodge_buff"
 local ACTIVE_COLOR = { 255, 0, 255, 0 }
 local INACTIVE_COLOR = { 255, 255, 64, 64 }
+local WARNING_COLOR = { 255, 255, 255, 255 }
 
 local indicator_text_style = table.clone(UIFontSettings.body)
 indicator_text_style.text_horizontal_alignment = "center"
@@ -17,6 +18,15 @@ indicator_text_style.size = { 400, 40 }
 indicator_text_style.offset = { 0, 0, 10 }
 indicator_text_style.text_color = INACTIVE_COLOR
 
+local warning_text_style = table.clone(UIFontSettings.body_small)
+warning_text_style.text_horizontal_alignment = "center"
+warning_text_style.text_vertical_alignment = "center"
+warning_text_style.horizontal_alignment = "center"
+warning_text_style.vertical_alignment = "center"
+warning_text_style.size = { 400, 30 }
+warning_text_style.offset = { 0, 0, 0 }
+warning_text_style.text_color = WARNING_COLOR
+
 local ui_definitions = {
     scenegraph_definition = {
         screen = UIWorkspaceSettings.screen,
@@ -24,7 +34,7 @@ local ui_definitions = {
             parent = "screen",
             vertical_alignment = "center",
             horizontal_alignment = "center",
-            size = { 400, 40 },
+            size = { 400, 70 },
             position = { 0, 0, 0 },
         },
     },
@@ -36,6 +46,13 @@ local ui_definitions = {
                 style_id = "text",
                 value = "",
                 style = indicator_text_style,
+            },
+            {
+                pass_type = "text",
+                value_id = "warning_text",
+                style_id = "warning_text",
+                value = "",
+                style = warning_text_style,
             },
         }, "indicator"),
     },
@@ -103,6 +120,7 @@ function HudElementVultureDodgeIndicator:_update_indicator()
 
     widget.visible = show
     widget.content.text = mod:localize(is_active and "indicator_active" or "indicator_inactive")
+    widget.content.warning_text = mod:localize("indicator_warning")
     widget.style.text.text_color = is_active and ACTIVE_COLOR or INACTIVE_COLOR
 end
 
@@ -113,12 +131,17 @@ function HudElementVultureDodgeIndicator:update_settings()
     end
 
     local style = widget.style.text
+    local warning_style = widget.style.warning_text
     local font_size = mod:get("font_size") or 26
 
     style.font_size = font_size
     style.size[2] = math.max(20, font_size + 6)
     style.offset[1] = mod:get("offset_x") or 0
     style.offset[2] = mod:get("offset_y") or -200
+
+    warning_style.font_size = math.max(16, math.floor(font_size * 0.7))
+    warning_style.offset[1] = style.offset[1]
+    warning_style.offset[2] = style.offset[2] - math.max(18, warning_style.font_size + 2)
 end
 
 HudElementVultureDodgeIndicator.draw = function(self, dt, t, ui_renderer, render_settings, input_service)
