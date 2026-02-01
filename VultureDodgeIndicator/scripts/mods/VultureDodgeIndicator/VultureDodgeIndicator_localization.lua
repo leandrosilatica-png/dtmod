@@ -3,30 +3,30 @@ return {
         en = "Vulture Dodge Indicator",
     },
     mod_description = {
-        en = "Shows whether Vulture's Dodge is active.",
+        en = "Shows a HUD indicator when Vulture's Dodge is active.",
     },
     show_active = {
-        en = "Show Active State",
+        en = "Show when active",
     },
     show_inactive = {
-        en = "Show Inactive State",
+        en = "Show when inactive",
     },
     show_in_hub = {
-        en = "Show in Hub",
+        en = "Show in hub",
     },
     font_size = {
-        en = "Font Size",
+        en = "Font size",
     },
     offset_x = {
-        en = "Horizontal Offset",
+        en = "Horizontal offset",
     },
     offset_y = {
-        en = "Vertical Offset",
+        en = "Vertical offset",
     },
     indicator_active = {
-        en = "Vulture Dodge: ACTIVE",
+        en = "Vulture Dodge",
     },
     indicator_inactive = {
-        en = "Vulture Dodge: INACTIVE",
+        en = "Vulture Dodge (inactive)",
     },
 }
