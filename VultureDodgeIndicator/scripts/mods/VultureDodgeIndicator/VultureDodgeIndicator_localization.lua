@@ -30,6 +30,6 @@ return {
         en = "Vulture Dodge (inactive)",
     },
     indicator_warning = {
-        en = "Still vulnerable head-on",
+        en = "⚠ Still vulnerable head-on",
     },
 }
